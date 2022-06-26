@@ -19,22 +19,38 @@ const getPatientById = (req, res) => {
 };
 
 const addPatient = (req, res) => {
-  const { pid, pname, pemail, mobile, password } = req.body;
-  pool.query(queries.checkEmailExists, [pemail], (error, results) => {
-    if (results.rows.length) {
-      res.send("email already exists.");
-    }
+  // const { pid, pname, pemail, mobile, password } = req.body;
+  const pid = req.body.pid;
+  const pname=req.body.pname;
+  const pemail = req.body.pemail;
+  const mobile = req.body.mobile;
+  const password = req.body.password;
+
+ 
     pool.query(
       queries.addPatient,
       [pid, pname, pemail, mobile, password],
       (error, results) => {
-        if (error) throw error
-        {
-          res.status(201).send("patient created successfully");
-          console.log("patient created successfully");
+        if (error) {
+          res.status(500).json({"msg":"something wrong"})
         }
+        const user = results.rows[0];
+    if (user) {
+      if (password === user.password) {
+        res.status(200).json(user);
+      }
+      else {
+        res.status(400).json({ " msg": "invalid password" })
+      }
+    }
+    else {
+      res.status(400).json({ " msg": "invalid email" })
+    }
+     
+          console.log("patient created successfully");
+        
       });
-  });
+  
 
 };
 const removepatient = (req, res) => {
@@ -61,9 +77,9 @@ const loginPatient = (req, res) => {
   const pemail = req.body.pemail;
   const password = req.body.password;
   pool.query(queries.getPatientByemail, [pemail], (error, results) => {
-     if(error) {
-      res.status(500).json({"msg":"something wrong"})
-     }
+    if (error) {
+      res.status(500).json({ "msg": "something wrong" })
+    }
     const user = results.rows[0];
     if (user) {
       if (password === user.password) {
