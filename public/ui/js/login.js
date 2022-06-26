@@ -19,8 +19,8 @@ async function postData(url = '', data = {}) {
 
 postData('http://localhost:9000/api/v1/patient/login',  {
     
-    "pemail": "uma@gmail.com",
-    "password":"23456789"
+    "pemail": "aa@gmail.com",
+    "password":"2356789"
  })
   .then(data => {
     console.log(data); // JSON data parsed by `data.json()` call
