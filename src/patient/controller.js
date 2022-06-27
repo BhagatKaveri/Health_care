@@ -1,6 +1,7 @@
 const pool = require('../../db');
 const queries = require('./queries');
 const bcrypt = require('bcrypt');
+const Validator = require("validator");
 const getpatients = (req, res) => {
   //console.log("getting patient");
   pool.query(queries.getpatients, (error, results) => {
@@ -25,10 +26,10 @@ const registerpatient = async (req, res) => {
   const pemail = req.body.pemail;
   const mobile = req.body.mobile;
   const password = req.body.password;
-  try {
+ try {
     const data = await queries.getPatientByemail;
     const arr = data.row;
-    if (arr.length != 0) {
+    if(arr && arr.length) {
       return res.status(400).json({ error: "email already there,no need to register again" });
     }
     else {
@@ -51,11 +52,11 @@ const registerpatient = async (req, res) => {
           (error, results) => {
             if (error) {
               flag = 0;
-              res.status(500).json({ "msg": "database error" })
+              res.status(500).json({ "msg": "this user alredy register" })
             }
             else {
               flag = 1;
-              return res.status(200).json({ "msg": "user added to database,not varified" });
+              return res.status(200).json({ "msg": "user added to database" });
             }
             if (flag) {
               const token = jwt.sign({ pemail: pemail }, process.env.SECRET_KEY);
