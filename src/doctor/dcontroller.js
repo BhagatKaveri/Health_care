@@ -7,7 +7,7 @@ const getdoctors = (req, res) => {
     pool.query(dqueries.getdoctors, (error, results) => {
         if (error) throw error;
         res.status(200).json(results.rows);
-        //res.send("all patient");
+        res.send("all patient");
     });
 };
 
@@ -56,24 +56,33 @@ const registerdoctor = async (req, res) => {
         else {
             bcrypt.hash(password, 8, (error, hash) => {
                 if (error)
-                    res.status(error).json({ error: "server error" });
-
+                    res.status(error).json({ error: "server error", });
+                const user = {
+                    did,
+                    dname,
+                    speciality,
+                    visiting_day,
+                    visiting_time,
+                    landline,
+                    demail,
+                    password
+                }
                 var flag = 1;
                 pool.query(
-                    dqueries.registerdoctor,
-                    [did, dname, speciality, visiting_day, visiting_time, landline, demail, password],
+                    dqueries.registerdoctor, [user],
                     (error, results) => {
                         if (error) {
                             flag = 0;//if user is not insert is inserted to databse
-                            res.status(500).json({ "msg": "database error" })
+                            console.error(error);
+                            return res.status(500).json({ error: "database error" })
                         }
                         else {
                             flag = 1;
-                            return res.status(200).json({ "msg": "user added to database" });
+                            res.status(200).send({ "msg": "user added to database" });
                         }
-                        /*  if (flag) {
-                          const token = jwt.sign({ pemail: pemail }, process.env.SECRET_KEY);
-                        }*/
+                        if (flag) {
+                            const token = jwt.sign({ demail: demail }, process.env.SECRET_KEY);
+                        }
                     });
             })
         }
@@ -82,7 +91,7 @@ const registerdoctor = async (req, res) => {
         console.log(error);
         res.status(500).json({ error: "database error while registation patient", })
 
-    };
+    }
 }
 
 
