@@ -3,10 +3,10 @@ const dcontroller = require('./dcontroller');
 const router = Router();
 
 router.get("/alldoctor",dcontroller.getdoctors);
-router.post("/createdoctor", dcontroller.adddoctor);
+router.post("/registerdoctor", dcontroller.registerdoctor);
 router.get("/getdoctor/:did", dcontroller.getDoctorById);
 router.put("/updatedoctor/:did",  dcontroller.updatedoctor);
 router.delete("/deletedoctor/:did",dcontroller.removedoctor);
-
+router.post("/logindoctor", dcontroller.logindoctor);
 
 module.exports = router;

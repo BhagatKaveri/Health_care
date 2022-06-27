@@ -28,7 +28,7 @@ const registerpatient = async (req, res) => {
   const password = req.body.password;
  try {
     const data = await queries.getPatientByemail;
-    const arr = data.row;
+    const arr = data.rows;
     if(arr && arr.length) {
       return res.status(400).json({ error: "email already there,no need to register again" });
     }
@@ -51,16 +51,16 @@ const registerpatient = async (req, res) => {
           [pid, pname, pemail, mobile, password],
           (error, results) => {
             if (error) {
-              flag = 0;
-              res.status(500).json({ "msg": "this user alredy register" })
+              flag = 0;//if user is not insert is inserted to databse
+              res.status(500).json({ "msg": "database error" })
             }
             else {
               flag = 1;
               return res.status(200).json({ "msg": "user added to database" });
             }
-            if (flag) {
+           /*if (flag) {
               const token = jwt.sign({ pemail: pemail }, process.env.SECRET_KEY);
-            }
+            }*/
           });
       })
     }
