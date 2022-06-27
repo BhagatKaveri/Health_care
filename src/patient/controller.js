@@ -1,5 +1,6 @@
 const pool = require('../../db');
 const queries = require('./queries');
+const bcrypt = require('bcrypt');
 const getpatients = (req, res) => {
   //console.log("getting patient");
   pool.query(queries.getpatients, (error, results) => {
@@ -18,41 +19,59 @@ const getPatientById = (req, res) => {
   });
 };
 
-const addPatient = (req, res) => {
-  // const { pid, pname, pemail, mobile, password } = req.body;
+const registerpatient = async (req, res) => {
   const pid = req.body.pid;
-  const pname=req.body.pname;
+  const pname = req.body.pname;
   const pemail = req.body.pemail;
   const mobile = req.body.mobile;
   const password = req.body.password;
-
- 
-    pool.query(
-      queries.addPatient,
-      [pid, pname, pemail, mobile, password],
-      (error, results) => {
-        if (error) {
-          res.status(500).json({"msg":"something wrong"})
-        }
-        const user = results.rows[0];
-    if (user) {
-      if (password === user.password) {
-        res.status(200).json(user);
-      }
-      else {
-        res.status(400).json({ " msg": "invalid password" })
-      }
+  try {
+    const data = await queries.getPatientByemail;
+    const arr = data.row;
+    if (arr.length != 0) {
+      return res.status(400).json({ error: "email already there,no need to register again" });
     }
     else {
-      res.status(400).json({ " msg": "invalid email" })
-    }
-     
-          console.log("patient created successfully");
-        
-      });
-  
+      bcrypt.hash(password, 8, (error, hash) => {
+        if (error)
+          res.status(error).json({ error: "server error" });
+        /*const user ={
+          pid,
+          pname,
+          pemail,
+          mobile,
+          password:hash,
+        };*/
+        var flag = 1;
 
-};
+
+        pool.query(
+          queries.registerpatient,
+          [pid, pname, pemail, mobile, password],
+          (error, results) => {
+            if (error) {
+              flag = 0;
+              res.status(500).json({ "msg": "database error" })
+            }
+            else {
+              flag = 1;
+              return res.status(200).json({ "msg": "user added to database,not varified" });
+            }
+            if (flag) {
+              const token = jwt.sign({ pemail: pemail }, process.env.SECRET_KEY);
+            }
+          });
+      })
+    }
+  }
+  catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "database error while registation patient", })
+
+  };
+}
+
+
 const removepatient = (req, res) => {
   const pid = parseInt(req.params.pid);
   pool.query(queries.removepatient, [pid], (error, results) => {
@@ -92,7 +111,7 @@ const loginPatient = (req, res) => {
     else {
       res.status(400).json({ " msg": "invalid email" })
     }
-    console.log("get patient successfully");
+    console.log(" patient login successfully");
     //console.log(getPatientByname);
   });
 };
@@ -101,7 +120,7 @@ const loginPatient = (req, res) => {
 module.exports = {
   getpatients,
   getPatientById,
-  addPatient,
+  registerpatient,
   updatepatient,
   removepatient,
   loginPatient
