@@ -57,24 +57,22 @@ const registerdoctor = async (req, res) => {
             bcrypt.hash(password, 8, (error, hash) => {
                 if (error)
                     res.status(error).json({ error: "server error", });
-                const user = {
-                    did,
-                    dname,
-                    speciality,
-                    visiting_day,
-                    visiting_time,
-                    landline,
-                    demail,
-                    password
-                }
+                
                 var flag = 1;
                 pool.query(
-                    dqueries.registerdoctor, [user],
+                    dqueries.registerdoctor, [did,
+                        dname,
+                        speciality,
+                        visiting_day,
+                        visiting_time,
+                        landline,
+                        demail,
+                        password],
                     (error, results) => {
                         if (error) {
                             flag = 0;//if user is not insert is inserted to databse
                             console.error(error);
-                            return res.status(500).json({ error: "database error" })
+                         res.status(500).json({ error: "database error" })
                         }
                         else {
                             flag = 1;

@@ -87,7 +87,7 @@ const updatepatient = (req, res) => {
   const pid = parseInt(req.params.pid);
   const pname = req.body.pname;
   pool.query(queries.updatepatient, [pname, pid], (error, results) => {
-    const nopatientfound = !results.rows.length;
+    const nopatientfound =! results.rows.length;
     if (nopatientfound) {
       res.send("patient does not exist in the database");
     }
