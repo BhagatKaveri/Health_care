@@ -56,8 +56,6 @@ const removedoctor=(req,res)  => {
 const nopatientfound = !results.rows.length;
 if(nopatientfound) { 
 res.send("patient does not exist in the database");
-  }
-  }); 
 };
 
 module.exports = {
