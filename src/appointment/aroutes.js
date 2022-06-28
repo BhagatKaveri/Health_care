@@ -1,7 +1,9 @@
 const { Router } = require ('express');
-const dcontroller = require('./acontroller');
+const acontroller = require('./acontroller');
 const router = Router();
-router.get("/allappointment",dcontroller.getappointments);
+
+router.get("/allappointments",acontroller.getappointments);
+router.post("/makeappointment", acontroller.makeappointment);
 
 
 module.exports = router;

@@ -1,3 +1,6 @@
+
+let user;
+
 const button =document.getElementById("cf-submit");
 
  const pemail = document.getElementById("uname");

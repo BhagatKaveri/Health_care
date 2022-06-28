@@ -1,7 +1,7 @@
 const pool = require('../../db');
 const queries = require('./queries');
 const bcrypt = require('bcrypt');
-const Validator = require("validator");
+
 const getpatients = (req, res) => {
   //console.log("getting patient");
   pool.query(queries.getpatients, (error, results) => {

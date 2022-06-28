@@ -18,7 +18,7 @@ app.get("/", (req,res) =>
 
 app.use("/api/v1/patient", patientRoutes);
 app.use("/api/v1/doctor", doctorRoutes);
-app.use("/api/v1/appoint", appointmentRoutes);
+app.use("/api/v1/appointment", appointmentRoutes);
 
 
 app.listen(port,() => console.log('app listening on port  8000'));
