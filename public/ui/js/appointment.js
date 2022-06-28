@@ -27,7 +27,7 @@ button.addEventListener("click", () => {
         "message": message.value,
 
     });*/
-    console.log(pname);
+    console.log("pname");
 
 
 

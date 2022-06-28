@@ -116,10 +116,10 @@ const updatedoctor = (req, res) => {
 const removedoctor = (req, res) => {
     const did = parseInt(req.params.did);
     pool.query(dqueries.removedoctor, [did], (error, results) => {
-        const nopatientfound = !results.rows.length;
-        if (nopatientfound) {
-            res.send("patient does not exist in the database");
-        }
+        // const nopatientfound = !results.rows.length;
+        // if (nopatientfound) {
+        //     res.send("patient does not exist in the database");
+        // }
     });
 };
 
