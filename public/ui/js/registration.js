@@ -116,7 +116,7 @@ postData('http://localhost:8000/api/v1/patient/register',  {
     "pemail":pemail.value ,
     "mobile":mobile.value,
      "password":password.value,
-
+     
  })
   .then(data => {
     console.log(data); // JSON data parsed by `data.json()` call

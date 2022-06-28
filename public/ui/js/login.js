@@ -9,8 +9,8 @@ const button =document.getElementById("cf-submit");
  button.addEventListener('click',(event) => {
 
    event.preventDefault();
-   console.log("pemail",pemail.value)
-   console.log("pass",pass.value)
+   //console.log("pemail",pemail.value)
+   //console.log("password",password.value)
   //   user = json.stringify({
      
   //    "pemail":pemail.value,
@@ -40,7 +40,7 @@ async function postData(url = '', data = {}) {
 postData('http://localhost:8000/api/v1/patient/login',  {
     
     "pemail": pemail.value,
-    "password":pass.value,
+    "password":password.value,
  })
   .then(data => {
     console.log(data); // JSON data parsed by `data.json()` call
