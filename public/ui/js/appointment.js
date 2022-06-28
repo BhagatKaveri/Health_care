@@ -16,7 +16,7 @@ const message=document.getElementById("message")
 button.addEventListener("click", () => {
     event.preventDefault();
 
-    var data = JSON.stringify({
+   /* var data = JSON.stringify({
         //"pid": pid.value,
         "pname": pname.value,
         "pemail": pemail.value,
@@ -26,12 +26,12 @@ button.addEventListener("click", () => {
         "mobile": mobile.value,
         "message": message.value,
 
-    });
+    });*/
+    console.log(pname);
 
 
 
-
-    console.log(data);
+  //  console.log(data);
 })
 //console.log(data);
 // async function postData(url = '', data = {}) {
