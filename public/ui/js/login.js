@@ -1,4 +1,21 @@
+const button =document.getElementById("cf-submit");
 
+ const pemail = document.getElementById("uname");
+ 
+ const password = document.getElementById("pass");
+ button.addEventListener('click',(event) => {
+
+   event.preventDefault();
+   console.log("pemail",pemail.value)
+   console.log("pass",pass.value)
+  //   user = json.stringify({
+     
+  //    "pemail":pemail.value,
+  //    "mobile":mobile.value,
+  //    "password":password.value,
+  //  });
+ })
+ console.log(user);
 async function postData(url = '', data = {}) {
   // Default options are marked with *
   const response = await fetch(url, {
@@ -17,10 +34,10 @@ async function postData(url = '', data = {}) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
-postData('http://localhost:9000/api/v1/patient/login',  {
+postData('http://localhost:8000/api/v1/patient/login',  {
     
-    "pemail": "kaveri@gmail.com",
-    "password":"12345678"
+    "pemail": pemail.value,
+    "password":pass.value,
  })
   .then(data => {
     console.log(data); // JSON data parsed by `data.json()` call
