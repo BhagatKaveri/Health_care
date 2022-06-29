@@ -9,16 +9,31 @@ const button =document.getElementById("cf-submit");
  button.addEventListener('click',(event) => {
 
    event.preventDefault();
-   //console.log("pemail",pemail.value)
-   //console.log("password",password.value)
-  //   user = json.stringify({
-     
-  //    "pemail":pemail.value,
-  //    "mobile":mobile.value,
-  //    "password":password.value,
-  //  });
+
+   postData('http://localhost:8000/api/v1/patient/login',  {    
+    "pemail": pemail.value,
+    "password":password.value,
  })
- console.log(user);
+  .then(data => {
+   // console.log(data);
+//     var login_success = false;  /* set this to true if the login was a success */
+
+// if(login_success == false)
+// {
+//     document.getElementById("login_failed").innerHTML = "Login Failed.";
+// }
+// else
+// {
+//   console.log(data);
+//      window.location.href = "index.html";
+// }
+
+    console.log(data); // JSON data parsed by `data.json()` call
+    //window.location.href='index.html';
+  });
+
+ })
+
 async function postData(url = '', data = {}) {
   // Default options are marked with *
   const response = await fetch(url, {
@@ -36,12 +51,3 @@ async function postData(url = '', data = {}) {
   });
   return response.json(); // parses JSON response into native JavaScript objects
 }
-
-postData('http://localhost:8000/api/v1/patient/login',  {
-    
-    "pemail": pemail.value,
-    "password":password.value,
- })
-  .then(data => {
-    console.log(data); // JSON data parsed by `data.json()` call
-  });

@@ -87,7 +87,7 @@ const registerdoctor = async (req, res) => {
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({ error: "database error while registation patient", })
+        res.status(500).json({ error: "database error while registration patient", })
 
     }
 }
@@ -109,7 +109,7 @@ const updatedoctor = (req, res) => {
     pool.query(dqueries.updatedoctor, [dname, demail, did], (error, results) => {
         const nopatientfound = !results.rows.length;
         if (nopatientfound) {
-            res.send("patient does not exist in the database");
+            console.log("patient does not exist in the database");
         }
     });
 };
