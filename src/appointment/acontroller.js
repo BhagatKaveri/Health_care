@@ -19,11 +19,12 @@ const makeappointment = async (req, res) => {
     const select_time=req.body.select_time;
     const speciality=req.body.speciality;
     const mobile = req.body.mobile;
+    const massage = req.body.massage;
     
   
           pool.query(
             aqueries.addappointment,
-            [ pname, pemail,select_date,select_time,speciality, mobile],
+            [ pname, pemail,select_date,select_time,speciality, mobile,massage],
             (error, results) => {
               if (error) {
                 //flag = 0;//if user is not insert is inserted to databse

@@ -1,7 +1,7 @@
 
 let data;
 const button = document.getElementById("button")
-const pid = document.getElementById("empid")
+//const pid = document.getElementById("empid")
 const pname = document.getElementById("firstname")
 const pemail = document.getElementById("email")
 const mobile = document.getElementById("phone_number")
@@ -12,7 +12,7 @@ button.addEventListener('click', (event) => {
   event.preventDefault();
 
   postData('http://localhost:8000/api/v1/patient/register', {
-    "pid": pid.value,
+   // "pid": pid.value,
     "pname": pname.value,
     "pemail": pemail.value,
     "mobile": mobile.value,

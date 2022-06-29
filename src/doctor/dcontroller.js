@@ -39,7 +39,7 @@ const logindoctor = (req, res) => {
 
 
 const registerdoctor = async (req, res) => {
-    const did = req.body.did;
+   // const did = req.body.did;
     const dname = req.body.dname;
     const speciality = req.body.speciality;
     const visiting_day = req.body.visiting_day;
@@ -60,7 +60,7 @@ const registerdoctor = async (req, res) => {
                 
                 var flag = 1;
                 pool.query(
-                    dqueries.registerdoctor, [did,
+                    dqueries.registerdoctor, [
                         dname,
                         speciality,
                         visiting_day,
@@ -94,8 +94,9 @@ const registerdoctor = async (req, res) => {
 
 
 const getDoctorById = (req, res) => {
-    const did = parseInt(req.params.did);
-    pool.query(dqueries.getDoctorById, [did], (error, results) => {
+    //const did = parseInt(req.params.did);
+    const dname = req.body.dname;
+    pool.query(dqueries.getDoctorById, [dname], (error, results) => {
         if (error) throw error;
         res.status(200).json(results.rows);
         console.log("get patient successfully");
@@ -104,9 +105,10 @@ const getDoctorById = (req, res) => {
 };
 
 const updatedoctor = (req, res) => {
-    const did = parseInt(req.params.did);
-    const { dname, demail } = req.body
-    pool.query(dqueries.updatedoctor, [dname, demail, did], (error, results) => {
+    //const did = parseInt(req.params.did);
+    const dname = req.body.dname;
+    const demail  = req.body.demail;
+    pool.query(dqueries.updatedoctor, [dname, demail], (error, results) => {
         const nopatientfound = !results.rows.length;
         if (nopatientfound) {
             console.log("patient does not exist in the database");
@@ -114,8 +116,9 @@ const updatedoctor = (req, res) => {
     });
 };
 const removedoctor = (req, res) => {
-    const did = parseInt(req.params.did);
-    pool.query(dqueries.removedoctor, [did], (error, results) => {
+    //const did = parseInt(req.params.did);
+    const dname = req.body.dname;
+    pool.query(dqueries.removedoctor, [dname], (error, results) => {
          const nopatientfound = !results.rows.length;
         if (nopatientfound) {
             res.send("patient does not exist in the database");

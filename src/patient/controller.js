@@ -11,8 +11,9 @@ const getpatients = (req, res) => {
   });
 };
 const getPatientById = (req, res) => {
-  const pid = parseInt(req.params.pid);
-  pool.query(queries.getPatientById, [pid], (error, results) => {
+  //const pid = parseInt(req.params.pid);
+  const pname = req.body.pname;
+  pool.query(queries.getPatientById, [pname], (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
     console.log("get patient successfully");
@@ -21,7 +22,7 @@ const getPatientById = (req, res) => {
 };
 
 const registerpatient = async (req, res) => {
-  const pid = req.body.pid;
+  //const pid = req.body.pid;
   const pname = req.body.pname;
   const pemail = req.body.pemail;
   const mobile = req.body.mobile;
@@ -48,7 +49,7 @@ const registerpatient = async (req, res) => {
 
         pool.query(
           queries.registerpatient,
-          [pid, pname, pemail, mobile, password],
+          [ pname, pemail, mobile, password],
           (error, results) => {
             if (error) {
               flag = 0;//if user is not insert is inserted to databse
@@ -74,8 +75,9 @@ const registerpatient = async (req, res) => {
 
 
 const removepatient = (req, res) => {
-  const pid = parseInt(req.params.pid);
-  pool.query(queries.removepatient, [pid], (error, results) => {
+ // const pid = parseInt(req.params.pid);
+ const pname = req.body.pname;
+  pool.query(queries.removepatient, [pname], (error, results) => {
     const nopatientfound = !results.rows.length;
     if (nopatientfound) {
       res.send("patient does not exist in the database");
@@ -84,9 +86,9 @@ const removepatient = (req, res) => {
 };
 
 const updatepatient = (req, res) => {
-  const pid = parseInt(req.params.pid);
+  //const pid = parseInt(req.params.pid);
   const pname = req.body.pname;
-  pool.query(queries.updatepatient, [pname, pid], (error, results) => {
+  pool.query(queries.updatepatient, [pname], (error, results) => {
     const nopatientfound =! results.rows.length;
     if (nopatientfound) {
       res.send("patient does not exist in the database");
