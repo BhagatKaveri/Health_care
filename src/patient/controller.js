@@ -27,16 +27,16 @@ const registerpatient = async (req, res) => {
   const pemail = req.body.pemail;
   const mobile = req.body.mobile;
   const password = req.body.password;
- try {
+  try {
     const data = await queries.getPatientByemail;
     const arr = data.rows;
-    if(arr && arr.length) {
-      return res.status(400).json({ error: "email already there,no need to register again" });
+    if (arr && arr.length) {
+      return res.status(400).json({ error: "email already there,no need to register again" , status: false});
     }
     else {
       bcrypt.hash(password, 8, (error, hash) => {
         if (error)
-          res.status(error).json({ error: "server error" });
+          res.status(error).json({ error: "server error" , status: false});
         /*const user ={
           pid,
           pname,
@@ -49,19 +49,19 @@ const registerpatient = async (req, res) => {
 
         pool.query(
           queries.registerpatient,
-          [ pname, pemail, mobile, password],
+          [pname, pemail, mobile, password],
           (error, results) => {
             if (error) {
               flag = 0;//if user is not insert is inserted to databse
-              res.status(500).json({ "msg": "database error" })
+              res.status(500).json({ "msg": "database error" , status: false})
             }
             else {
               flag = 1;
-              return res.status(200).json({ "msg": "user added to database" });
+              return res.status(200).json({ status: true,"msg": "user added to database" });
             }
-           /*if (flag) {
-              const token = jwt.sign({ pemail: pemail }, process.env.SECRET_KEY);
-            }*/
+            /*if (flag) {
+               const token = jwt.sign({ pemail: pemail }, process.env.SECRET_KEY);
+             }*/
           });
       })
     }
@@ -75,8 +75,8 @@ const registerpatient = async (req, res) => {
 
 
 const removepatient = (req, res) => {
- // const pid = parseInt(req.params.pid);
- const pname = req.body.pname;
+  // const pid = parseInt(req.params.pid);
+  const pname = req.body.pname;
   pool.query(queries.removepatient, [pname], (error, results) => {
     const nopatientfound = !results.rows.length;
     if (nopatientfound) {
@@ -89,9 +89,9 @@ const updatepatient = (req, res) => {
   //const pid = parseInt(req.params.pid);
   const pname = req.body.pname;
   pool.query(queries.updatepatient, [pname], (error, results) => {
-    const nopatientfound =! results.rows.length;
+    const nopatientfound = !results.rows.length;
     if (nopatientfound) {
-      res.send("patient does not exist in the database");
+      res.send({"msg" : "patient does not exist in the database", status : true});
     }
   });
 };
@@ -100,22 +100,21 @@ const loginPatient = (req, res) => {
   const password = req.body.password;
   pool.query(queries.getPatientByemail, [pemail], (error, results) => {
     if (error) {
-      res.status(500).json({ "msg": "something wrong" })
+      res.status(500).json({ "msg": "something wrong", status: false })
     }
     const user = results.rows[0];
     if (user) {
       if (password === user.password) {
-        res.status(200).json(user);
+        console.log(" patient login successfully");
+        res.status(200).json({ status: true, data: user });
       }
       else {
-        res.status(400).json({ " msg": "invalid password" })
+        res.status(400).json({ " msg": "invalid password", status: false })
       }
     }
     else {
-      res.status(400).json({ " msg": "invalid email" })
+      res.status(400).json({ " msg": "invalid email", status: false })
     }
-    console.log(" patient login successfully");
-    //console.log(getPatientByname);
   });
 };
 

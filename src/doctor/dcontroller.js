@@ -41,7 +41,7 @@ const logindoctor = (req, res) => {
 const registerdoctor = async (req, res) => {
    // const did = req.body.did;
     const dname = req.body.dname;
-    const speciality = req.body.speciality;
+    const deptname = req.body.deptname;
     const visiting_day = req.body.visiting_day;
     const visiting_time = req.body.visiting_time;
     const landline = req.body.landline;
@@ -62,7 +62,7 @@ const registerdoctor = async (req, res) => {
                 pool.query(
                     dqueries.registerdoctor, [
                         dname,
-                        speciality,
+                        deptname,
                         visiting_day,
                         visiting_time,
                         landline,
@@ -78,9 +78,9 @@ const registerdoctor = async (req, res) => {
                             flag = 1;
                             res.status(200).send({ "msg": "user added to database" });
                         }
-                        if (flag) {
-                            const token = jwt.sign({ demail: demail }, process.env.SECRET_KEY);
-                        }
+                       // if (flag) {
+                        //    const token = jwt.sign({ demail: demail }, process.env.SECRET_KEY);
+                       // }
                     });
             })
         }
