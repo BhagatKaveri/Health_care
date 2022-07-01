@@ -23,6 +23,7 @@ button.addEventListener('click', (event) => {
       if(data.status) {
       console.log(data); // JSON data parsed by `data.json()` call
       window.location.href = 'login.html';
+      alert("successfully registered ");
       }
       else {
       const errSpan=document.getElementById("registration_failed");

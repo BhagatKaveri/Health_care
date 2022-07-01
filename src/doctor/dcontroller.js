@@ -17,21 +17,23 @@ const logindoctor = (req, res) => {
     const password = req.body.password;
     pool.query(dqueries.getdoctorByemail, [demail], (error, results) => {
         if (error) {
-            res.status(500).json({ "msg": "something wrong" })
+            res.status(500).json({ "msg": "something wrong" , status : false})
         }
         const user = results.rows[0];
         if (user) {
             if (password === user.password) {
-                res.status(200).json(user);
+                console.log(" doctor login successfully");
+                res.status(200).json({status : true ,data :user});
+                
             }
             else {
-                res.status(400).json({ " msg": "invalid password" })
+                res.status(400).json({ " msg": "invalid password" ,status : false })
             }
         }
         else {
-            res.status(400).json({ " msg": "invalid email" })
+            res.status(400).json({ " msg": "invalid email",status : false })
         }
-        console.log(" doctor login successfully");
+        
         //console.log(getPatientByname);
     });
 };
@@ -41,9 +43,9 @@ const logindoctor = (req, res) => {
 const registerdoctor = async (req, res) => {
    // const did = req.body.did;
     const dname = req.body.dname;
-    const deptname = req.body.deptname;
-    const visiting_day = req.body.visiting_day;
-    const visiting_time = req.body.visiting_time;
+    const speciality = req.body.speciality;
+    const start_time = req.body.start_time;
+    const end_time = req.body.end_time;
     const landline = req.body.landline;
     const demail = req.body.demail;
     const password = req.body.password;
@@ -62,9 +64,9 @@ const registerdoctor = async (req, res) => {
                 pool.query(
                     dqueries.registerdoctor, [
                         dname,
-                        deptname,
-                        visiting_day,
-                        visiting_time,
+                        speciality,
+                        start_time,
+                        end_time,
                         landline,
                         demail,
                         password],

@@ -11,26 +11,27 @@ const getappointments = (req, res) => {
 };
 
 const makeappointment = async (req, res) => {
-
-  const pname = req.body.pname;
+  const appointment_number = req.body.appointment_number;
   const pemail = req.body.pemail;
+  const dname = req.body.dname;
   const select_date = req.body.select_date;
   const select_time = req.body.select_time;
   const speciality = req.body.speciality;
-  const mobile = req.body.mobile;
   const message = req.body.message;
 
 
   pool.query(
     aqueries.addappointment,
-    [pname, pemail, select_date, select_time, speciality, mobile, message],
-    (error, results) => {
-      
-        if(error) throw error;
-        
-        res.status(201).send("patient appointment created successfully");
-        console.log("created");
-        
+    [appointment_number, pemail, dname, select_date, select_time, speciality, message],
+    (err, results) => {
+
+      // if (error) {
+      //   throw error
+      // }
+       res.status(201).send("patient appointment created successfully");
+      // console.log("created");
+      // console.log(err,res);
+      // pool.end()
     })
 };
 

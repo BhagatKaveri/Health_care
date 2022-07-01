@@ -1,5 +1,5 @@
 const getdoctors = "select * from doctor";
-const registerdoctor="insert into doctor (dname,deptname,visiting_day,visiting_time,landline,demail,password) values ($1, $2,$3,$4,$5,$6,$7)";
+const registerdoctor="insert into doctor (dname,speciality,start_time,end_time,landline,demail,password) values ($1, $2,$3,$4,$5,$6,$7)";
 const checkEmailExists = "SELECT s FROM doctor s WHERE s.demail = $1";
 const getDoctorById = "SELECT demail,speciality FROM doctor where dname= $1";
 const updatedoctor="UPDATE doctor SET dname=$1,demail=$2 where dname = $3 ";

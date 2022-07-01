@@ -18,6 +18,7 @@ button.addEventListener('click', (event) => {
       if (data.status) {
         console.log(data);
         window.location.href = "index.html";
+        alert("login successfully");
       }
       else {
         const errSpan = document.getElementById("login_failed");
