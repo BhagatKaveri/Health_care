@@ -27,6 +27,7 @@ const registerpatient = async (req, res) => {
   const pemail = req.body.pemail;
   const mobile = req.body.mobile;
   const password = req.body.password;
+  const token = req.body.token;
   try {
     const data = await queries.getPatientByemail;
     const arr = data.rows;
@@ -49,7 +50,7 @@ const registerpatient = async (req, res) => {
 
         pool.query(
           queries.registerpatient,
-          [pname, pemail, mobile, password],
+          [pname, pemail, mobile, password,token],
           (error, results) => {
             if (error) {
               flag = 0;//if user is not insert is inserted to databse

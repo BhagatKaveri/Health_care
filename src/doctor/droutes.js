@@ -8,5 +8,5 @@ router.get("/getdoctor/:did", dcontroller.getDoctorById);
 router.put("/updatedoctor/:did",  dcontroller.updatedoctor);
 router.delete("/deletedoctor/:did",dcontroller.removedoctor);
 router.post("/logindoctor", dcontroller.logindoctor);
-
+//router.put("/forgot-password",dcontroller.forgetpassword);
 module.exports = router;

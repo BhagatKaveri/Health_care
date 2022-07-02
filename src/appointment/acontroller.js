@@ -23,15 +23,16 @@ const makeappointment = async (req, res) => {
   pool.query(
     aqueries.addappointment,
     [appointment_number, pemail, dname, select_date, select_time, speciality, message],
-    (err, results) => {
+    (error, results) => {
 
       // if (error) {
-      //   throw error
-      // }
-       res.status(201).send("patient appointment created successfully");
-      // console.log("created");
-      // console.log(err,res);
-      // pool.end()
+      //    throw error
+      //  }
+      //  res.status(201).send({"msg":"patient appointment created successfully",status :true});
+      if (error) {
+        throw error;
+      }
+      res.status(500).json({ "msg": "patient appointment created successfully" , status: true})
     })
 };
 

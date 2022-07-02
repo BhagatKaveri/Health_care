@@ -1,7 +1,8 @@
 const pool = require('../../db');
 const dqueries = require('./dqueries');
 const bcrypt = require('bcrypt');
-const Validator = require("validator");
+const jwt = require("jsonwebtoken");
+const mailgun =require("mailgun-js");
 const getdoctors = (req, res) => {
     //console.log("getting patient");
     pool.query(dqueries.getdoctors, (error, results) => {
@@ -128,6 +129,45 @@ const removedoctor = (req, res) => {
     });
 };
 
+// const forgetpassword = (req,res) => {
+//     const demail =req.body.demail;
+
+//     user.findone({demail},(err,user) => {
+// if(err || !user) {
+//     return res.status(400).json({error :"doctor with this emailalready exists"});
+// }
+// const token = jut.sign({ dname:user.dname}, process.env.RESET_PASSWORD_KEY, {expiresIn: '20m'});
+// const data = {
+// from: 'noreply@hello.com',
+// to: email,
+// subject:' Account Activation Link',
+// html:
+// {/* <h2>Please click on given link to reset your password</h2> 
+// <p>${process.env.CLIENT_URL}/resetpassword/${token}</p> */}
+
+//   };
+//   return user.updateOne({resetLink: token}, function(err, success) {
+//  if(err) {
+//     return res.status(408).json({error: "reset password link error"});
+//     } else {
+//     pool.messages().send(data, function (error, body) {
+//      if(error)
+//     return res.json({
+//     error: err.message
+//     })
+//      return res.json({message:'Email has been sent,kindly follow the instructions'});
+    
+//     });
+// }
+//  })
+// })
+// }
+    
+    
+
+
+
+
 module.exports = {
     getdoctors,
     registerdoctor,
@@ -135,5 +175,6 @@ module.exports = {
     updatedoctor,
     removedoctor,
     logindoctor,
+    //forgetpassword,
 
 };

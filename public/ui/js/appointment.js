@@ -12,45 +12,57 @@ const message=document.getElementById("message")
 button.addEventListener("click", () => {
     event.preventDefault();
 
-//     var data = JSON.stringify({
-//         //"pid": pid.value,
-//         "appointment_number":appointment_number.value,
-//         "pemail": pemail.value,
-//         "dname": dname.value,
-//         "select_date":select_date.value,
-//         "select_time":select_date.value,
-//         "speciality":speciality.value,
-//         "message": message.value,
-//  )
-    //console.log("pname");
+    // var data = JSON.stringify({
+    //     //"pid": pid.value,
+    //     "appointment_number":appointment_number.value,
+    //     "pemail": pemail.value,
+    //     "dname": dname.value,
+    //     "select_date":select_date.value,
+    //     "select_time":select_date.value,
+    //     "speciality":speciality.value,
+    //     "message": message.value,
+    // })
+        
+    //console.log(data);
+   // alert("appointment book")
+   // window.location.href = "index.html";
 
-    postData('http://localhost:8000/api/v1/appointment/booappointment',  {
+    postData('http://localhost:8000/api/v1/appointment/bookappointment',  {
     
         "appointment_number":appointment_number.value,
         "pemail":pemail.value ,
         "dname": dname.value,
         "select_date":select_date.value,
-        "select_time":select_date.value,
+        "select_time":select_time.value,
         "speciality":speciality.value,
-        "mobile":mobile.value,
+        "message":message.value
+        //"appointment_number": "111",
+        // "pemail": "bhagatkaveri750@gmail.com",
+        // "dname": "Dr.Uday Kulkarni",
+        // "select_date": "2022-12-12T08:00:00.000Z",
+        // "select_time": "15:30:00",
+        // "speciality": "Surgeon",
+        // "message": "i have fever"
+        
          })
      .then(data => {
         if (data.status) {
          
 
     console.log(data);
-alert("appointment book")
+alert("Appointment Book Successfully")
 window.location.href = "index.html";
-        }
-        else {
-            const errSpan = document.getElementById("booking_failed");
-            if(errSpan){
-              errSpan.innerHTML = "booking  Failed.";
-            }
+        // }
+        // else {
+        //     const errSpan = document.getElementById("booking_failed");
+        //     if(errSpan){
+        //       errSpan.innerHTML = "booking  Failed.";
+        //     }
+
           }
-        });
+         });
 });
-async function postData(url = '', data = {}) {
+async function postData(url='', data={ } ) {
     // Default options are marked with *
     const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
