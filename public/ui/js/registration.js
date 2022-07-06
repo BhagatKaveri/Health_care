@@ -1,11 +1,11 @@
 
 let data;
-const button = document.getElementById("button")
+const button = document.getElementById("cf-submit")
 //const pid = document.getElementById("empid")
 const pname = document.getElementById("firstname")
 const pemail = document.getElementById("email")
 const mobile = document.getElementById("phone_number")
-const password = document.getElementById("password")
+const password = document.getElementById("pass")
 
 button.addEventListener('click', (event) => {
 

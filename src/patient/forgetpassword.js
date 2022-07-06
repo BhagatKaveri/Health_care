@@ -19,7 +19,7 @@ pass: '8669724028' // Your password
 });
 var mailOptions = {
 from: 'bhagatkaveri2000@gmail.com',
-to: email,
+to: pemail,
 subject: 'Reset Password Link - Tutsmake.com',
 text: 'You requested for reset password, kindly use this <a href="http://localhost:8000/api/v1/patient/reset-password?token=' + token + '">link</a> to reset your password'
 };

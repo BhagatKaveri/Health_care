@@ -8,5 +8,5 @@ router.get("/getpatient/", controller.getPatientById);
  router.put("/upadatepatient",  controller.updatepatient);
  router.delete("/deletepatient",controller.removepatient);
  router.post("/login", controller.loginPatient);
-
+router.post("/forget-password",controller.forget_password);
 module.exports = router;
