@@ -1,6 +1,41 @@
 const pool = require('../../db');
 const queries = require('./queries');
+const config = require('../config/config');
 const bcrypt = require('bcrypt');
+var randomstring = require('randomstring');
+ var nodemailer = require('nodemailer');
+ var randtoken = require('rand-token');
+ const sendresetpasswordmail = async(pname,pemail,token) => {}
+ try {
+
+   const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port:587,
+    secure:false,
+    requireTLS:true,
+    auth: {
+    user: config.emailUser, // Your email id
+    pass: config.emailPassword // Your password
+    }
+    });
+   const  mailOptions = {
+    from: config.emailUser,
+    to: pemail,
+    subject: 'Reset Password Link',
+    html: '<p>You requested for reset password, kindly use this <a href="http://localhost:8000/api/v1/patient/reset-password?token=' + token + '">link</a> to reset your password'
+    } 
+transporter.sendMail(mailOptions, function(error, info) {
+  if (error) {
+  console.log(error)
+  } else {
+  console.log("Mail has been sent:-", info.response)
+  }
+  });
+  }
+ catch(error) {
+  res.status(400).send({success:false,msg: "error message"})    
+
+ }
 
 const getpatients = (req, res) => {
   //console.log("getting patient");
@@ -119,6 +154,31 @@ const loginPatient = (req, res) => {
   });
 };
 
+const forget_password = async(req, res)=>{ 
+try {
+const pemail=req.body.pemail;
+
+ const userData = await patient.findOne({pemail: pemail});
+
+ if(userData){
+  const randomstring = randomstring.generate();
+ const data =await patient.updateOne({pemail:pemail},{$set:{token :randomstring}});
+sendresetpasswordmail(userData.pname,userData.pemail,randomstring);
+
+ res.status(200).send({success:true,msg: "please check your inbox of mailand reset your password."})    
+
+
+}
+  else {
+ res.status(200).send({success:true,msg: "This email does not exists."})  
+  } 
+} catch (error) 
+  {
+     res.status(400).send({success:false,msg:error.message});
+  
+  }
+}
+
 
 module.exports = {
   getpatients,
@@ -126,5 +186,6 @@ module.exports = {
   registerpatient,
   updatepatient,
   removepatient,
-  loginPatient
+  loginPatient,
+  forget_password,
 };
